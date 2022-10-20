@@ -6,6 +6,8 @@ var randomButton = document.querySelector('.show-random')
 var createPosterButton = document.querySelector('.show-form')
 var mainPosterSection = document.querySelector('.main-poster')
 var hiddenPosterForm = document.querySelector('.poster-form')
+var viewSavedPosters = document.querySelector('.saved-posters')
+var savedPosterSection = document.querySelector('.show-saved')
 // var formImageURL = document.querySelector('.poster-image-url')
 // we've provided you with some data to work with 👇
 var images = [
@@ -144,4 +146,11 @@ createPosterButton.addEventListener('click', openPosterForm)
 function openPosterForm(){
     mainPosterSection.classList.add('hidden');
     hiddenPosterForm.classList.remove('hidden')
+}
+
+//View saved posters
+savedPosterSection.addEventListener('click', openSaved)
+function openSaved(){
+  mainPosterSection.classList.add('hidden');
+  viewSavedPosters.classList.remove('hidden')
 }
