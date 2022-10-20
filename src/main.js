@@ -2,6 +2,7 @@
 var mainPageImage = document.querySelector('.poster-img')
 var mainPageTitle = document.querySelector('.poster-title')
 var mainPageQuote = document.querySelector('.poster-quote')
+var randomButton = document.querySelector('.show-random')
 // we've provided you with some data to work with 👇
 var images = [
   "./assets/bees.jpg",
@@ -105,11 +106,25 @@ var currentPoster;
 
 // event listeners go here 👇
 
+
+
 // functions and event handlers go here 👇
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
+
+randomButton.addEventListener('click', generateNewPoster);
+
+function generateNewPoster(){
+  var randomImageButton = images[getRandomIndex(images)]
+  mainPageImage.src = randomImageButton
+  var randomTitleButton = titles[getRandomIndex(titles)]
+  mainPageTitle.innerText = randomTitleButton
+  var randomQuoteButton = quotes[getRandomIndex(quotes)]
+  mainPageQuote.innerText = randomQuoteButton
+}
+
 
 var randomImage = images[getRandomIndex(images)]
 mainPageImage.src = randomImage
@@ -119,3 +134,4 @@ mainPageTitle.innerText = randomTitle
 
 var randomQuote = quotes[getRandomIndex(quotes)]
 mainPageQuote.innerText = randomQuote
+
