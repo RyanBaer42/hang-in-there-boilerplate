@@ -3,6 +3,10 @@ var mainPageImage = document.querySelector('.poster-img')
 var mainPageTitle = document.querySelector('.poster-title')
 var mainPageQuote = document.querySelector('.poster-quote')
 var randomButton = document.querySelector('.show-random')
+var createPosterButton = document.querySelector('.show-form')
+var mainPosterSection = document.querySelector('.main-poster')
+var hiddenPosterForm = document.querySelector('.poster-form')
+// var formImageURL = document.querySelector('.poster-image-url')
 // we've provided you with some data to work with 👇
 var images = [
   "./assets/bees.jpg",
@@ -113,7 +117,7 @@ var currentPoster;
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
-
+// Random Poster Button
 randomButton.addEventListener('click', generateNewPoster);
 
 function generateNewPoster(){
@@ -125,7 +129,7 @@ function generateNewPoster(){
   mainPageQuote.innerText = randomQuoteButton
 }
 
-
+//Random poster when opening main page
 var randomImage = images[getRandomIndex(images)]
 mainPageImage.src = randomImage
 
@@ -135,3 +139,9 @@ mainPageTitle.innerText = randomTitle
 var randomQuote = quotes[getRandomIndex(quotes)]
 mainPageQuote.innerText = randomQuote
 
+//Make your own poster
+createPosterButton.addEventListener('click', openPosterForm)
+function openPosterForm(){
+    mainPosterSection.classList.add('hidden');
+    hiddenPosterForm.classList.remove('hidden')
+}
