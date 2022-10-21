@@ -8,6 +8,8 @@ var mainPosterSection = document.querySelector('.main-poster')
 var hiddenPosterForm = document.querySelector('.poster-form')
 var viewSavedPosters = document.querySelector('.saved-posters')
 var savedPosterSection = document.querySelector('.show-saved')
+var backToMainButton = document.querySelector('.back-to-main')
+var nevermindButton = document.querySelector('.show-main')
 // var formImageURL = document.querySelector('.poster-image-url')
 // we've provided you with some data to work with 👇
 var images = [
@@ -143,6 +145,7 @@ mainPageQuote.innerText = randomQuote
 
 //Make your own poster
 createPosterButton.addEventListener('click', openPosterForm)
+
 function openPosterForm(){
     mainPosterSection.classList.add('hidden');
     hiddenPosterForm.classList.remove('hidden')
@@ -150,7 +153,24 @@ function openPosterForm(){
 
 //View saved posters
 savedPosterSection.addEventListener('click', openSaved)
+
 function openSaved(){
   mainPosterSection.classList.add('hidden');
   viewSavedPosters.classList.remove('hidden')
+}
+
+// Back to main from saved
+backToMainButton.addEventListener('click', returnMainSaved)
+
+function returnMainSaved(){
+    viewSavedPosters.classList.add('hidden')
+    mainPosterSection.classList.remove('hidden')
+}
+
+//Back to main from create Poster form
+nevermindButton.addEventListener('click', returnMainForm)
+
+function returnMainForm(){
+  hiddenPosterForm.classList.add('hidden')
+  mainPosterSection.classList.remove('hidden')
 }
