@@ -10,6 +10,10 @@ var viewSavedPosters = document.querySelector('.saved-posters')
 var savedPosterSection = document.querySelector('.show-saved')
 var backToMainButton = document.querySelector('.back-to-main')
 var nevermindButton = document.querySelector('.show-main')
+var imageURLInput = document.querySelector('#poster-image-url')
+var titleInput = document.querySelector('#poster-title')
+var quoteInput = document.querySelector('#poster-quote')
+var showPosterButton = document.querySelector('.make-poster')
 // var formImageURL = document.querySelector('.poster-image-url')
 // we've provided you with some data to work with 👇
 var images = [
@@ -30,7 +34,7 @@ var images = [
   "./assets/runner.jpg",
   "./assets/squirrel.jpg",
   "./assets/tiger.jpg",
-  "./assets/turtle.jpg"
+  "./assets/turtle.jpg",
 ];
 var titles = [
   "determination",
@@ -173,4 +177,20 @@ nevermindButton.addEventListener('click', returnMainForm)
 function returnMainForm(){
   hiddenPosterForm.classList.add('hidden')
   mainPosterSection.classList.remove('hidden')
+}
+
+// Creating Custom Poster
+showPosterButton.addEventListener('click', createMyPoster)
+
+function createMyPoster(){
+  event.preventDefault()
+  mainPosterSection.classList.remove('hidden');
+  hiddenPosterForm.classList.add('hidden');
+  var newPoster = new Poster(imageURLInput.value, titleInput.value, quoteInput.value)
+  images.push(newPoster.imageURL);
+  titles.push(newPoster.title);
+  quotes.push(newPoster.quote);
+  mainPageImage.src = images[images.length -1];
+  mainPageTitle.innerText = titles[titles.length -1];
+  mainPageQuote.innerText = quotes[quotes.length -1];
 }
