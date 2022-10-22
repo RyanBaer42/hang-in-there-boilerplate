@@ -131,31 +131,20 @@ var currentPoster;
 // functions and event handlers go here 👇
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
-  return Math.floor(Math.random() * array.length);
+  var newRandomIndex = Math.floor(Math.random() * array.length);
+  return array[newRandomIndex]
 }
 // Random Poster Button
-showRandomPosterButton.addEventListener('click', generateNewPoster);
+window.addEventListener('load', newPosterLoad)
+showRandomPosterButton.addEventListener('click', newPosterLoad)
 
-function generateNewPoster(){
-  var randomImageButton = images[getRandomIndex(images)]
-  mainPageImage.src = randomImageButton
-  var randomTitleButton = titles[getRandomIndex(titles)]
-  mainPageTitle.innerText = randomTitleButton
-  var randomQuoteButton = quotes[getRandomIndex(quotes)]
-  mainPageQuote.innerText = randomQuoteButton
-
+function newPosterLoad(){
+  currentPoster = new Poster(getRandomIndex(images), getRandomIndex(titles),getRandomIndex(quotes));
+  mainPageImage.src = currentPoster.imageURL
+  mainPageTitle.innerText = currentPoster.title
+  mainPageQuote.innerText = currentPoster.quote
 }
 
-//Random poster when opening main page
-
-var randomImage = images[getRandomIndex(images)]
-mainPageImage.src = randomImage
-
-var randomTitle = titles[getRandomIndex(titles)]
-mainPageTitle.innerText = randomTitle
-
-var randomQuote = quotes[getRandomIndex(quotes)]
-mainPageQuote.innerText = randomQuote
 
 //Make your own poster
 makeYourOwnPosterButton.addEventListener('click', openPosterForm)
@@ -164,8 +153,6 @@ function openPosterForm(){
     mainPosterSection.classList.add('hidden');
     hiddenPosterForm.classList.remove('hidden')
 }
-
-
 ////DONT MOVE
 
 showSavedPostersButton.addEventListener('click', showSavedPosters)
@@ -176,11 +163,11 @@ function showSavedPosters(){
   savedPostersGrid.innerHTML = ''
   for (var i = 0; i < savedPosters.length; i++){
     savedPostersGrid.innerHTML +=
-    `<div  class="mini-poster" id= ${savedPosters[i].id}}>
-      <img class='poster-img'  src= ${savedPosters[i].imageURL} alt="nothin' to see here">
+    `<article class="mini-poster" id="${savedPosters[i].id}">
+      <img class='poster-img' src="${savedPosters[i].imageURL}" alt="nothin' to see here">
       <h2 class='poster-title'>${savedPosters[i].title}</h2>
       <h4 class='poster-quote'>${savedPosters[i].quote}</h4>
-     </div>
+     </article>
     `
   }
 }
@@ -208,24 +195,23 @@ function createMyPoster(){
   event.preventDefault()
   mainPosterSection.classList.remove('hidden');
   hiddenPosterForm.classList.add('hidden');
-  var newPoster = new Poster(imageURLInput.value, titleInput.value, quoteInput.value)
-  images.push(newPoster.imageURL);
-  titles.push(newPoster.title);
-  quotes.push(newPoster.quote);
-  mainPageImage.src = newPoster.imageURL;
-  mainPageTitle.innerText = newPoster.title;
-  mainPageQuote.innerText = newPoster.quote;
+  currentPoster = new Poster(imageURLInput.value, titleInput.value, quoteInput.value)
+  images.push(currentPoster.imageURL);
+  titles.push(currentPoster.title);
+  quotes.push(currentPoster.quote);
+  mainPageImage.src = currentPoster.imageURL;
+  mainPageTitle.innerText = currentPoster.title;
+  mainPageQuote.innerText = currentPoster.quote;
 }
 
 
 // Save This Poster
-newSavedPoster = new Poster(mainPageImage.src,mainPageTitle.innerText,mainPageQuote.innerText)
+// newSavedPoster = new Poster(mainPageImage.src,mainPageTitle.innerText,mainPageQuote.innerText)
 
 saveThisPosterButton.addEventListener('click', addToSavedPosters)
 
 function addToSavedPosters() {
-  if (!savedPosters.includes(newSavedPoster.id)) {
-    savedPosters.push(newSavedPoster);
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster);
   }
-  console.log(savedPosters)
 }
