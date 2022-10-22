@@ -143,7 +143,7 @@ function generateNewPoster(){
   mainPageTitle.innerText = randomTitleButton
   var randomQuoteButton = quotes[getRandomIndex(quotes)]
   mainPageQuote.innerText = randomQuoteButton
-  
+
 }
 
 //Random poster when opening main page
@@ -173,6 +173,16 @@ showSavedPostersButton.addEventListener('click', showSavedPosters)
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden');
   viewSavedPosters.classList.remove('hidden');
+  savedPostersGrid.innerHTML = ''
+  for (var i = 0; i < savedPosters.length; i++){
+    savedPostersGrid.innerHTML +=
+    `<div  class="mini-poster" id= ${savedPosters[i].id}}>
+      <img class='poster-img'  src= ${savedPosters[i].imageURL} alt="nothin' to see here">
+      <h2 class='poster-title'>${savedPosters[i].title}</h2>
+      <h4 class='poster-quote'>${savedPosters[i].quote}</h4>
+     </div>
+    `
+  }
 }
 
 // Back to main from saved
@@ -202,32 +212,20 @@ function createMyPoster(){
   images.push(newPoster.imageURL);
   titles.push(newPoster.title);
   quotes.push(newPoster.quote);
-  mainPageImage.src = images[images.length -1];
-  mainPageTitle.innerText = titles[titles.length -1];
-  mainPageQuote.innerText = quotes[quotes.length -1];
+  mainPageImage.src = newPoster.imageURL;
+  mainPageTitle.innerText = newPoster.title;
+  mainPageQuote.innerText = newPoster.quote;
 }
 
 
 // Save This Poster
-currentPoster = new Poster(randomImageButton, randomTitleButton, randomQuoteButton)
-
+newSavedPoster = new Poster(mainPageImage.src,mainPageTitle.innerText,mainPageQuote.innerText)
 
 saveThisPosterButton.addEventListener('click', addToSavedPosters)
 
 function addToSavedPosters() {
-  currentPoster = [mainPageImage.src, mainPageTitle.innerText, mainPageQuote.innerText]
-  if (!savedPosters.includes(currentPoster)) {
-    savedPosters.push(currentPoster);
+  if (!savedPosters.includes(newSavedPoster.id)) {
+    savedPosters.push(newSavedPoster);
   }
+  console.log(savedPosters)
 }
-
-//View saved posters
-
-//   savedPostersGrid.classList.add("saved-poster-grid");
-  
-//   savedPostersGrid.innerHTML = ''; 
-// }
-
-// create a function to push or += into innerHTML?
-
-
