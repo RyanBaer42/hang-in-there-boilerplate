@@ -9,18 +9,13 @@ var imageURLInput = document.querySelector('#poster-image-url')
 var titleInput = document.querySelector('#poster-title')
 var quoteInput = document.querySelector('#poster-quote')
 var savedPostersGrid = document.querySelector('.saved-posters-grid')
-
-// query selector buttons
 var showRandomPosterButton = document.querySelector('.show-random')
 var makeYourOwnPosterButton = document.querySelector('.show-form')
 var showMyPosterButton = document.querySelector('.make-poster')
 var nevermindTakeMeBackButton = document.querySelector('.show-main')
 var backToMainButton = document.querySelector('.back-to-main')
 var showSavedPostersButton = document.querySelector('.show-saved')
-// buttons in progress
-saveThisPosterButton = document.querySelector('.save-poster')
-
-
+var saveThisPosterButton = document.querySelector('.save-poster')
 
 // var formImageURL = document.querySelector('.poster-image-url')
 // we've provided you with some data to work with 👇
@@ -125,8 +120,15 @@ var savedPosters = [];
 var currentPoster;
 
 // event listeners go here 👇
-
-
+window.addEventListener('load', loadRandomPoster)
+showRandomPosterButton.addEventListener('click', loadRandomPoster)
+makeYourOwnPosterButton.addEventListener('click', openPosterForm)
+showSavedPostersButton.addEventListener('click', showSavedPosters)
+backToMainButton.addEventListener('click', returnToMainSaved)
+nevermindTakeMeBackButton.addEventListener('click', returnToMainCustom)
+showMyPosterButton.addEventListener('click', createCustomPoster)
+saveThisPosterButton.addEventListener('click', addToSavedPosters)
+savedPostersGrid.addEventListener('dblclick', deleteSavedPoster);
 
 // functions and event handlers go here 👇
 // (we've provided one for you to get you started)!
@@ -134,28 +136,18 @@ function getRandomIndex(array) {
   var newRandomIndex = Math.floor(Math.random() * array.length);
   return array[newRandomIndex]
 }
-// Random Poster Button
-window.addEventListener('load', newPosterLoad)
-showRandomPosterButton.addEventListener('click', newPosterLoad)
 
-function newPosterLoad(){
+function loadRandomPoster(){
   currentPoster = new Poster(getRandomIndex(images), getRandomIndex(titles),getRandomIndex(quotes));
   mainPageImage.src = currentPoster.imageURL
   mainPageTitle.innerText = currentPoster.title
   mainPageQuote.innerText = currentPoster.quote
 }
 
-
-//Make your own poster
-makeYourOwnPosterButton.addEventListener('click', openPosterForm)
-
 function openPosterForm(){
     mainPosterSection.classList.add('hidden');
     hiddenPosterForm.classList.remove('hidden')
 }
-////DONT MOVE
-
-showSavedPostersButton.addEventListener('click', showSavedPosters)
 
 function showSavedPosters(){
   mainPosterSection.classList.add('hidden');
@@ -164,34 +156,25 @@ function showSavedPosters(){
   for (var i = 0; i < savedPosters.length; i++){
     savedPostersGrid.innerHTML +=
     `<article class="mini-poster" id="${savedPosters[i].id}">
-      <img class='poster-img' src="${savedPosters[i].imageURL}" alt="nothin' to see here">
-      <h2 class='poster-title'>${savedPosters[i].title}</h2>
-      <h4 class='poster-quote'>${savedPosters[i].quote}</h4>
+      <img class='poster-img' src="${savedPosters[i].imageURL}" alt="nothin' to see here" id="${savedPosters[i].id}">
+      <h2 class='poster-title' id="${savedPosters[i].id}">${savedPosters[i].title}</h2>
+      <h4 class='poster-quote' id="${savedPosters[i].id}">${savedPosters[i].quote}</h4>
      </article>
     `
   }
 }
 
-// Back to main from saved
-backToMainButton.addEventListener('click', returnMainSaved)
-
-function returnMainSaved(){
+function returnToMainSaved(){
     viewSavedPosters.classList.add('hidden')
     mainPosterSection.classList.remove('hidden')
 }
 
-//Back to main from create Poster form
-nevermindTakeMeBackButton.addEventListener('click', returnMainForm)
-
-function returnMainForm(){
+function returnToMainCustom(){
   hiddenPosterForm.classList.add('hidden')
   mainPosterSection.classList.remove('hidden')
 }
 
-// Creating Custom Poster
-showMyPosterButton.addEventListener('click', createMyPoster)
-
-function createMyPoster(){
+function createCustomPoster(){
   event.preventDefault()
   mainPosterSection.classList.remove('hidden');
   hiddenPosterForm.classList.add('hidden');
@@ -204,14 +187,19 @@ function createMyPoster(){
   mainPageQuote.innerText = currentPoster.quote;
 }
 
-
-// Save This Poster
-// newSavedPoster = new Poster(mainPageImage.src,mainPageTitle.innerText,mainPageQuote.innerText)
-
-saveThisPosterButton.addEventListener('click', addToSavedPosters)
-
 function addToSavedPosters() {
   if (!savedPosters.includes(currentPoster)) {
     savedPosters.push(currentPoster);
+    alert('Current Poster has been saved!')
   }
+}
+
+function deleteSavedPoster() {
+  var id = Number(event.target.id)
+   for(i = 0; i < savedPosters.length; i++) {
+    if (savedPosters[i].id === id) {
+      savedPosters.splice(i, 1);
+    }
+  }
+  showSavedPosters()
 }
