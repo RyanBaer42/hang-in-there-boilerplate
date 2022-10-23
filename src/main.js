@@ -164,9 +164,9 @@ function showSavedPosters(){
   for (var i = 0; i < savedPosters.length; i++){
     savedPostersGrid.innerHTML +=
     `<article class="mini-poster" id="${savedPosters[i].id}">
-      <img class='poster-img' src="${savedPosters[i].imageURL}" alt="nothin' to see here">
-      <h2 class='poster-title'>${savedPosters[i].title}</h2>
-      <h4 class='poster-quote'>${savedPosters[i].quote}</h4>
+      <img class='poster-img' src="${savedPosters[i].imageURL}" alt="nothin' to see here" id="${savedPosters[i].id}">
+      <h2 class='poster-title' id="${savedPosters[i].id}">${savedPosters[i].title}</h2>
+      <h4 class='poster-quote' id="${savedPosters[i].id}">${savedPosters[i].quote}</h4>
      </article>
     `
   }
@@ -214,4 +214,16 @@ function addToSavedPosters() {
   if (!savedPosters.includes(currentPoster)) {
     savedPosters.push(currentPoster);
   }
+}
+
+savedPostersGrid.addEventListener('dblclick', deleteSavedPoster);
+
+function deleteSavedPoster() {
+  var id = Number(event.target.id)
+   for(i = 0; i < savedPosters.length; i++) {
+    if (savedPosters[i].id === id) {
+      savedPosters.splice(i, 1);
+    }
+  }
+  showSavedPosters();
 }
