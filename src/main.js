@@ -203,3 +203,15 @@ function deleteSavedPoster() {
   }
   showSavedPosters()
 }
+
+savedPostersGrid.addEventListener('dblclick', deleteSavedPoster);
+
+function deleteSavedPoster() {
+  var id = Number(event.target.id)
+   for(i = 0; i < savedPosters.length; i++) {
+    if (savedPosters[i].id === id) {
+      savedPosters.splice(i, 1);
+    }
+  }
+  showSavedPosters();
+}
